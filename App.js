@@ -5,7 +5,14 @@
  */
 
 import React, { Component } from 'react'
-import { Platform, StyleSheet, Text, View } from 'react-native'
+import {
+  Platform,
+  StyleSheet,
+  Text,
+  View,
+  PermissionsAndroid
+} from 'react-native'
+import Contacts from 'react-native-contacts'
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -13,9 +20,36 @@ const instructions = Platform.select({
     'Shake or press menu button for dev menu'
 })
 
+async function requestContactPermission() {
+  try {
+    const granted = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.READ_CONTACTS,
+      {
+        title: 'Cool Photo App Camera Permission',
+        message: 'Cool Photo App needs access to your camera ' +
+          'so you can take awesome pictures.'
+      }
+    )
+    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+      console.log('You can use the camera')
+    } else {
+      console.log('Camera permission denied')
+    }
+  } catch (err) {
+    console.warn(err)
+  }
+}
+
 type Props = {}
 export default class App extends Component<Props> {
   render() {
+    requestContactPermission()
+    Contacts.getAll((err, contacts) => {
+      if (err) throw err
+
+      // contacts returned
+      console.log(contacts)
+    })
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
