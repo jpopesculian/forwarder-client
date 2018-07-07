@@ -2,11 +2,12 @@
 
 import type { addContactAction } from '../actions/contacts'
 import type { contactsState } from '../data/contacts'
+import type { reducerMap } from '../utils/createReducer'
 import { ADD_CONTACTS } from '../types/contacts'
 import createReducer from '../utils/createReducer'
 
-const reducerMap = {
-  [ADD_CONTACTS]: <contactsState>(state: contactsState, action: addContactAction): contactsState => {
+const reducers: reducerMap<contactsState> = {
+  [ADD_CONTACTS]: (state, action: addContactAction) => {
     return {
       ...state,
       contacts: action.contacts
@@ -14,5 +15,7 @@ const reducerMap = {
   }
 }
 
-const contactsReducer = createReducer(reducerMap)
+const contactsReducer = createReducer(reducers, {
+  contacts: []
+})
 export default contactsReducer
