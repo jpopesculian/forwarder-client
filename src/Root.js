@@ -13,6 +13,7 @@ import {
   PermissionsAndroid
 } from 'react-native'
 import Contacts from 'react-native-contacts'
+import Test from './Test'
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -61,6 +62,7 @@ export default class Root extends Component<Props> {
         <Text style={styles.instructions}>
           {instructions}
         </Text>
+        <Test />
       </View>
     )
   }
