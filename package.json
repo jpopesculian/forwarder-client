@@ -12,6 +12,7 @@
     "apollo-link": "^1.2.2",
     "apollo-link-error": "^1.1.0",
     "apollo-link-http": "^1.5.4",
+    "awesome-phonenumber": "^2.2.6",
     "color": "^3.0.0",
     "graphql": "^0.13.2",
     "graphql-tag": "^2.9.2",
