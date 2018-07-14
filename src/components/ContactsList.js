@@ -18,7 +18,7 @@ export default class ContactsList extends Component<Props> {
           if (error) return <Text>No Contacts...</Text>
           return (
             <SectionList
-              initialNumToRender={2}
+              initialNumToRender={10}
               renderItem={props => <ContactsListItem {...props} />}
               renderSectionHeader={props => <SectionListHeader {...props} />}
               ItemSeparatorComponent={SectionListItemSeparator}

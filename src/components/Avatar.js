@@ -14,7 +14,7 @@ type Props = {
 export default class Avatar extends PureComponent<Props> {
   render() {
     const backgroundColor = randomColor({
-      seed: this.props.contact.givenName,
+      seed: this.props.contact.givenName + this.props.contact.familyName,
       luminosity: 'bright'
     })
     const colorQuery = Color(backgroundColor)
