@@ -70,6 +70,40 @@ const defaultContacts = [
       }
     ],
     birthday: { year: 2001, month: 10, day: 12 }
+  },
+  {
+    recordID: '6b2237ee0df85982',
+    company: '',
+    emailAddresses: [
+      {
+        label: 'work',
+        email: 'chuck-norris@example.com'
+      }
+    ],
+    familyName: 'Norris',
+    givenName: 'Chuck',
+    jobTitle: '',
+    middleName: '',
+    phoneNumbers: [
+      {
+        label: 'mobile',
+        number: '(000) 000-0000'
+      }
+    ],
+    hasThumbnail: true,
+    thumbnailPath: 'content://com.android.contacts/display_photo/1',
+    postalAddresses: [
+      {
+        street: '916 Franklin Dr',
+        city: 'Vienna',
+        state: 'NY',
+        region: 'NY',
+        postCode: '55555',
+        country: 'USA',
+        label: 'home'
+      }
+    ],
+    birthday: { year: 1960, month: 2, day: 20 }
   }
 ]
 

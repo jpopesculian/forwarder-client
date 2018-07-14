@@ -10,13 +10,14 @@ import {
 import HomeScreen from './screens/HomeScreen'
 import ContactsScreen from './screens/ContactsScreen'
 
-export default createBottomTabNavigator(
+export default createMaterialBottomTabNavigator(
   {
     Home: HomeScreen,
     Messages: ContactsScreen
   },
   {
-    initialRouteName: 'Home'
+    initialRouteName: 'Messages',
+    shifting: true
   }
 )
 

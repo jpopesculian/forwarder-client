@@ -7,7 +7,7 @@
 import React, { Component } from 'react'
 import { Platform, StyleSheet, Text, View } from 'react-native'
 import TestQuery from '../components/TestQuery'
-import ContactsList from '../components/ContactsList'
+import tabBarIcon from '../utils/tabBarIcon'
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -18,7 +18,8 @@ const instructions = Platform.select({
 type Props = {}
 export default class HomeScreen extends Component<Props> {
   static navigationOptions = {
-    title: 'Home'
+    title: 'Home',
+    tabBarIcon: tabBarIcon('access-alarm')
   }
   render() {
     return (
@@ -33,7 +34,6 @@ export default class HomeScreen extends Component<Props> {
           {instructions}
         </Text>
         <TestQuery />
-        <ContactsList />
       </View>
     )
   }

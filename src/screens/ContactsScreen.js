@@ -2,16 +2,19 @@
 
 import React, { Component } from 'react'
 import { Platform, StyleSheet, Text, View } from 'react-native'
+import ContactsList from '../components/ContactsList'
+import tabBarIcon from '../utils/tabBarIcon'
 
 type Props = {}
 export default class ContactsScreen extends Component<Props> {
   static navigationOptions = {
-    title: 'Contacts'
+    title: 'Contacts',
+    tabBarIcon: tabBarIcon('contacts')
   }
   render() {
     return (
       <View style={styles.container}>
-        <Text>Hello Contacts</Text>
+        <ContactsList />
       </View>
     )
   }
@@ -19,9 +22,6 @@ export default class ContactsScreen extends Component<Props> {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#FFF'
+    flex: 1
   }
 })
