@@ -40,5 +40,9 @@ export type contact = {
 }
 
 export type contactsState = {
-  contacts: Array<contact>
+  contacts: Array<contact>,
+  initialized: boolean,
+  loading: boolean,
+  allowed: boolean,
+  error: Error | null
 }

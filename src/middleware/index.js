@@ -1,6 +1,7 @@
 //@flow
 
-import { compose } from 'redux'
+import { compose, applyMiddleware } from 'redux'
+import thunkMiddleware from 'redux-thunk'
 import devTools from './devTools'
 
-export default compose(devTools)
+export default compose(applyMiddleware(thunkMiddleware), devTools)
