@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react'
 import { Platform, StyleSheet, Text, View } from 'react-native'
-import ContactsList from '../components/ContactsList'
+import ContactsList from '../containers/ContactsList'
 import tabBarIcon from '../utils/tabBarIcon'
 
 type Props = {}

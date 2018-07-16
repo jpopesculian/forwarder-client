@@ -3,7 +3,7 @@
 import React, { Component } from 'react'
 import { Provider } from 'react-redux'
 import { ApolloProvider } from 'react-apollo'
-import ContactsProvider from './src/containers/ContactsProvider'
+import ContactsProvider from './src/utils/ContactsProvider'
 import store from './src/store'
 import Main from './src/Main'
 import client from './src/apollo'
