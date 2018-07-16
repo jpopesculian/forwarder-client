@@ -44,5 +44,6 @@ export type contactsState = {
   initialized: boolean,
   loading: boolean,
   allowed: boolean,
-  error: Error | null
+  error: Error | null,
+  search: string
 }

@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react'
 import { Platform, StyleSheet, Text, View } from 'react-native'
-import ContactsList from '../containers/ContactsList'
+import Contacts from '../components/Contacts'
 import tabBarIcon from '../utils/tabBarIcon'
 
 type Props = {}
@@ -14,7 +14,7 @@ export default class ContactsScreen extends Component<Props> {
   render() {
     return (
       <View style={styles.container}>
-        <ContactsList />
+        <Contacts />
       </View>
     )
   }

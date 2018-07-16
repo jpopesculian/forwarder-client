@@ -5,7 +5,8 @@ import type {
   loadContactsAction,
   allowContactsAction,
   unallowContactsAction,
-  errContactsAction
+  errContactsAction,
+  searchContactsAction
 } from '../actions/contacts'
 import type { contactsState } from '../data/contacts'
 import type { reducerMap } from '../utils/createReducer'
@@ -14,24 +15,25 @@ import {
   ADD_CONTACTS,
   LOAD_CONTACTS,
   ALLOW_CONTACTS,
-  UNALLOW_CONTACTS
+  UNALLOW_CONTACTS,
+  SEARCH_CONTACTS
 } from '../types/contacts'
 import createReducer from '../utils/createReducer'
 
 const reducers: reducerMap<contactsState> = {
-  [ADD_CONTACTS]: (state, action: addContactsAction) => {
+  [ADD_CONTACTS]: (state, { contacts }: addContactsAction) => {
     return {
       ...state,
-      contacts: action.contacts,
+      contacts,
       initialized: true,
       loading: false,
       error: null
     }
   },
-  [ERR_CONTACTS]: (state, action: errContactsAction) => {
+  [ERR_CONTACTS]: (state, { error }: errContactsAction) => {
     return {
       ...state,
-      error: action.error,
+      error,
       initialized: true,
       loading: false
     }
@@ -53,6 +55,12 @@ const reducers: reducerMap<contactsState> = {
       ...state,
       allowed: false
     }
+  },
+  [SEARCH_CONTACTS]: (state, { search }: searchContactsAction) => {
+    return {
+      ...state,
+      search
+    }
   }
 }
 
@@ -61,6 +69,7 @@ const contactsReducer = createReducer(reducers, {
   initialized: false,
   loading: false,
   allowed: false,
-  error: null
+  error: null,
+  search: ''
 })
 export default contactsReducer

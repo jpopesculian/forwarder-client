@@ -3,7 +3,7 @@
 import type { Props } from '../containers/ContactsList'
 
 import React, { PureComponent } from 'react'
-import { Text, View, ActivityIndicator, SectionList } from 'react-native'
+import { Text, SectionList } from 'react-native'
 import ContactsListItem from './ContactsListItem'
 import SectionListHeader from './SectionListHeader'
 import SectionListItemSeparator from './SectionListItemSeparator'

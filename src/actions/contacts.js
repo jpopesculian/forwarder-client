@@ -8,7 +8,8 @@ import {
   LOAD_CONTACTS,
   ERR_CONTACTS,
   ALLOW_CONTACTS,
-  UNALLOW_CONTACTS
+  UNALLOW_CONTACTS,
+  SEARCH_CONTACTS
 } from '../types/contacts'
 import {
   requestContactPermission,
@@ -24,6 +25,9 @@ export type errContactsAction = action & {
 }
 export type allowContactsAction = action
 export type unallowContactsAction = action
+export type searchContactsAction = action & {
+  search: string
+}
 
 export const addContacts = (contacts: contacts): addContactsAction => ({
   type: ADD_CONTACTS,
@@ -45,6 +49,11 @@ export const allowContacts = (): allowContactsAction => ({
 
 export const unallowContacts = (): unallowContactsAction => ({
   type: UNALLOW_CONTACTS
+})
+
+export const searchContacts = (search: string): searchContactsAction => ({
+  type: SEARCH_CONTACTS,
+  search
 })
 
 export const fetchContacts = (): asyncAction => {
