@@ -28,7 +28,8 @@ const styles = StyleSheet.create({
   },
   searchContainer: {
     flex: 0,
-    padding: 10
+    paddingVertical: 10,
+    paddingHorizontal: 15
   },
   listContainer: {
     flex: 1

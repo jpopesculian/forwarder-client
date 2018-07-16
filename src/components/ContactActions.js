@@ -7,7 +7,7 @@ import _ from 'lodash/fp'
 import { View, Text, TouchableNativeFeedback, StyleSheet } from 'react-native'
 import NavigationService from '../utils/NavigationService'
 import Icon from 'react-native-vector-icons/MaterialIcons'
-import parseNumber from '../utils/parseNumber'
+import { getPhoneNumber } from '../data/contacts'
 
 type Props = {
   contact: contact
@@ -18,9 +18,7 @@ export default class ContactActions extends PureComponent<Props> {
       size: 25,
       color: '#5E35B1'
     }
-    const number = parseNumber(
-      _.get('number', _.first(this.props.contact.phoneNumbers))
-    )
+    const number = getPhoneNumber(this.props.contact)
     return (
       <View style={styles.container}>
         <TouchableNativeFeedback
@@ -34,7 +32,11 @@ export default class ContactActions extends PureComponent<Props> {
         <TouchableNativeFeedback
           useForeground={true}
           style={styles.actionContainer}
-          onPress={() => NavigationService.navigate('Conversation', { number })}
+          onPress={() =>
+            NavigationService.navigate('Conversation', {
+              number,
+              contact: this.props.contact
+            })}
         >
           <View style={styles.action}>
             <Icon name="message" {...iconStyle} />

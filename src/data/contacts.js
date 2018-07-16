@@ -1,4 +1,6 @@
 // @flow
+import parseNumber from '../utils/parseNumber'
+import _ from 'lodash/fp'
 
 export type emailAddress = {
   label: string,
@@ -37,6 +39,16 @@ export type contact = {
     month: number,
     day: number
   }
+}
+
+export function getPhoneNumber(contact: contact): string {
+  return parseNumber(_.get('number', _.first(contact.phoneNumbers)))
+}
+
+export function fullName(contact: contact): string {
+  return _.trim(
+    `${_.get('givenName', contact)} ${_.get('familyName', contact)}`
+  )
 }
 
 export type contactsState = {

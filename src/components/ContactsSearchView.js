@@ -19,8 +19,9 @@ export default class ContactsSearchView extends PureComponent<Props> {
         <View style={styles.icon}>
           <Icon name={'search'} size={20} />
         </View>
-        <View style={styles.input}>
+        <View style={styles.inputContainer}>
           <TextInput
+            style={styles.input}
             underlineColorAndroid={'transparent'}
             onChangeText={this.props.doSearch}
             value={this.props.search}
@@ -41,15 +42,17 @@ export default class ContactsSearchView extends PureComponent<Props> {
 }
 
 const styles = StyleSheet.create({
-  input: {
-    flex: 1
+  inputContainer: {
+    flex: 1,
+    paddingHorizontal: 5
   },
+  input: {},
   container: {
     backgroundColor: '#eee',
     flexDirection: 'row',
     alignItems: 'center',
-    borderRadius: 10,
-    paddingHorizontal: 10
+    borderRadius: 20,
+    paddingHorizontal: 15
   },
   icon: {
     flex: 0

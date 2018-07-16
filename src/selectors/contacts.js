@@ -6,10 +6,12 @@ import type { state } from '../data/state'
 import type { contacts } from '../utils/ContactsService'
 import type { SectionBase } from 'react-native/Libraries/Lists/SectionList'
 
+import { getPhoneNumber } from '../data/contacts'
 import { createSelector } from 'reselect'
 import _ from 'lodash/fp'
 
 export type groupedContacts = { [string]: contacts }
+export type indexedContacts = { [string]: contact }
 export type sortedContacts = Array<{ key: string, data: contacts }>
 export type contactSection = SectionBase<contact> & { title: string }
 export type contactSections = Array<contactSection>
@@ -56,6 +58,19 @@ export const searchTermsList: Selector<
 export const contactsList: Selector<state, null, contacts> = createSelector(
   scope,
   ({ contacts }: contactsState): contacts => contacts
+)
+
+export const indexedContactsList: Selector<
+  state,
+  null,
+  indexedContacts
+> = createSelector(contactsList, (contacts: contacts): indexedContacts =>
+  _.reduce(
+    (result: indexedContacts, contact: contact) =>
+      _.set(getPhoneNumber(contact), contact, result),
+    {},
+    contacts
+  )
 )
 
 export const filteredContactsList: Selector<
