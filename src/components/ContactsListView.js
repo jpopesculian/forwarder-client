@@ -7,19 +7,19 @@ import { Text, View, ActivityIndicator, SectionList } from 'react-native'
 import ContactsListItem from './ContactsListItem'
 import SectionListHeader from './SectionListHeader'
 import SectionListItemSeparator from './SectionListItemSeparator'
-import Loading from './Loading'
 import _ from 'lodash/fp'
 
 export default class ContactsListView extends PureComponent<Props> {
   render() {
-    if (this.props.isLoading || !this.props.isInitialized) return <Loading />
     if (this.props.hasError) return <Text>No Contacts...</Text>
     return (
       <SectionList
-        initialNumToRender={10}
+        initialNumToRender={15}
         renderItem={props => <ContactsListItem {...props} />}
         renderSectionHeader={props => <SectionListHeader {...props} />}
         ItemSeparatorComponent={SectionListItemSeparator}
+        refreshing={!this.props.isReady}
+        onRefresh={this.props.reload}
         sections={this.props.sections}
         keyExtractor={({ recordID }) => recordID}
       />

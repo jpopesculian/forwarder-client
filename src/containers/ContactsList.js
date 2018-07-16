@@ -5,38 +5,32 @@ import type { dispatcher } from '../utils/reduxTypes'
 import type { contactSections } from '../selectors/contacts'
 
 import { connect } from 'react-redux'
-import {
-  isLoading,
-  isInitialized,
-  hasError,
-  contactsSections
-} from '../selectors/contacts'
+import { isReady, hasError, contactsSections } from '../selectors/contacts'
+import { fetchContacts } from '../actions/contacts'
 import ContactsListView from '../components/ContactsListView'
 
 type OwnProps = {}
 type StateProps = {
-  isLoading: boolean,
-  isInitialized: boolean,
+  isReady: boolean,
   hasError: boolean,
   sections: contactSections
 }
 type DispatchProps = {
-  reload: () => mixed
+  reload: () => void
 }
 export type Props = OwnProps & StateProps & DispatchProps
 
 const mapStateToProps = (state: state, ownProps: OwnProps): StateProps => ({
-  isLoading: isLoading(state),
-  isInitialized: isInitialized(state),
+  isReady: isReady(state),
   hasError: hasError(state),
   sections: contactsSections(state)
 })
 
 const mapDispatchToProps = (
-  state: state,
+  dispatch: dispatcher,
   ownProps: OwnProps
 ): DispatchProps => ({
-  reload: () => null
+  reload: () => dispatch(fetchContacts())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactsListView)

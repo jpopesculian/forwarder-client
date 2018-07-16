@@ -34,6 +34,18 @@ export const isInitialized: Selector<
   return contacts.initialized
 })
 
+export const isReady: Selector<
+  state,
+  null,
+  boolean
+> = createSelector(
+  isLoading,
+  isInitialized,
+  (isLoading: boolean, isInitialized: boolean): boolean => {
+    return isInitialized && !isLoading
+  }
+)
+
 export const hasError: Selector<
   state,
   null,
