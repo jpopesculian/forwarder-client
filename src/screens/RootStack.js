@@ -21,7 +21,10 @@ export default createStackNavigator(
     Conversation: ConversationScreen
   },
   {
-    initialRouteName: 'Tabs',
+    initialRouteName: 'Conversation',
+    initialRouteParams: {
+      number: '+19165854267'
+    },
     navigationOptions: {
       headerStyle: {
         backgroundColor: '#fff'
