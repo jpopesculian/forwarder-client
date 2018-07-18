@@ -100,7 +100,7 @@ android {
 
     defaultConfig {
         applicationId "com.forwarder"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
@@ -132,6 +132,16 @@ android {
             if (abi != null) {  // null for the universal-debug, universal-release variants
                 output.versionCodeOverride =
                         versionCodes.get(abi) * 1048576 + defaultConfig.versionCode
+            }
+        }
+    }
+}
+
+configurations.all {
+    resolutionStrategy {
+        eachDependency { DependencyResolveDetails details ->
+            if (details.requested.name == 'android-jsc') {
+                details.useTarget group: details.requested.group, name: 'android-jsc-intl', version: 'r224109'
             }
         }
     }

@@ -8,6 +8,7 @@ import type { SectionBase } from 'react-native/Libraries/Lists/SectionList'
 
 import { getPhoneNumber } from '../data/contacts'
 import { createSelector } from 'reselect'
+import { groupData, sortGroupedData, createSections } from '../utils/sectionify'
 import _ from 'lodash/fp'
 
 export type groupedContacts = { [string]: contacts }
@@ -104,21 +105,7 @@ export const groupedContactsList: Selector<
 > = createSelector(
   filteredContactsList,
   (contacts: contacts): groupedContacts =>
-    _.reduce(
-      (result: groupedContacts, contact: contact) => {
-        const key = _.upperCase(_.first(contact.givenName))
-        const contactsAtKey = result[key]
-        return _.set(
-          key,
-          _.isArray(contactsAtKey)
-            ? _.concat(contactsAtKey, contact)
-            : [contact],
-          result
-        )
-      },
-      {},
-      contacts
-    )
+    groupData(item => _.toUpper(_.first(item.givenName)), contacts)
 )
 
 export const sortedContactsList: Selector<
@@ -128,20 +115,10 @@ export const sortedContactsList: Selector<
 > = createSelector(
   groupedContactsList,
   (contacts: groupedContacts): sortedContacts =>
-    _.orderBy(
-      'key',
-      ['asc'],
-      _.zipWith(
-        (key, data) => {
-          return { key, data }
-        },
-        _.keys(contacts),
-        _.orderBy(
-          ['givenName', 'familyName'],
-          ['asc', 'asc'],
-          _.values(contacts)
-        )
-      )
+    sortGroupedData(
+      _.orderBy(['givenName', 'familyName'], ['asc', 'asc']),
+      'asc',
+      contacts
     )
 )
 
@@ -151,4 +128,4 @@ export const contactsSections: Selector<
   Array<contactSection>
 > = createSelector(sortedContactsList, (contacts: sortedContacts): Array<
   contactSection
-> => _.map(({ key, data }) => ({ title: key, data }), contacts))
+> => createSections(_.identity, contacts))
