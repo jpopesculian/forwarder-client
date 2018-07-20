@@ -29,3 +29,16 @@ export function humanizeDate(dateArg: momentable): string {
 export function dateKey(dateArg: momentable): number {
   return parseInt(moment(dateArg).format('YYYYMMDD'))
 }
+
+export function reverseDateKey(key: number | string): moment {
+  return moment(key.toString(), 'YYYYMMDD')
+}
+
+// TODO change back
+// export function humanizeTimeSince(dateArg: momentable): string {
+//   return moment.duration(moment().diff(moment(dateArg))).humanize()
+// }
+
+export function humanizeTimeSince(dateArg: momentable): string {
+  return moment(dateArg).format('HH:mm')
+}

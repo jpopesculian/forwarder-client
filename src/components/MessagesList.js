@@ -1,13 +1,21 @@
 //@flow
 
 import React, { PureComponent } from 'react'
-import { View, StyleSheet, Text } from 'react-native'
+import { View, StyleSheet, SectionList, Text } from 'react-native'
 import { Query } from 'react-apollo'
-import query from '../graphql/queries/messages'
-import { humanizeDate, removeTime, dateKey } from '../utils/parseDate'
-import { groupData, sortGroupedData, createSections } from '../utils/sectionify'
 import moment from 'moment'
 import _ from 'lodash/fp'
+
+import query from '../graphql/queries/messages'
+import {
+  humanizeDate,
+  removeTime,
+  dateKey,
+  reverseDateKey
+} from '../utils/parseDate'
+import { groupData, sortGroupedData, createSections } from '../utils/sectionify'
+import MessageListHeader from './MessageListHeader'
+import MessageListItem from './MessageListItem'
 
 type Props = {}
 export default class MessagesList extends PureComponent<Props> {
@@ -18,21 +26,34 @@ export default class MessagesList extends PureComponent<Props> {
           if (loading) return <Text>Loading...</Text>
           if (error) return <Text>Error :(</Text>
 
-          const texts = data.texts.map(text => {
-            const args = {
-              indexedTime: text.receivedTime || text.sentTime,
-              key: dateKey(text.indexedTime)
-            }
-            return _.merge(_.clone(text), args)
-          })
-          const sections = groupData(_.get('key'), texts)
-          console.log(sections)
+          const sections = _.compose(
+            _.compose(
+              createSections(_.compose(humanizeDate, reverseDateKey)),
+              sortGroupedData(_.orderBy('indexedTime', ['desc']), 'desc'),
+              groupData(_.get('key'))
+            ),
+            _.map(
+              _.compose(
+                text => _.merge(text, { key: dateKey(text.indexedTime) }),
+                text =>
+                  _.merge(text, {
+                    indexedTime: text.receivedTime || text.sentTime
+                  }),
+                _.clone
+              )
+            )
+          )(data.texts)
 
-          return data.texts.map(({ id, body, from }) => (
-            <View key={id}>
-              <Text>{`${from}: ${body}`}</Text>
-            </View>
-          ))
+          return (
+            <SectionList
+              initialNumToRender={15}
+              renderItem={props => <MessageListItem {...props} />}
+              renderSectionFooter={props => <MessageListHeader {...props} />}
+              sections={sections}
+              inverted={true}
+              keyExtractor={({ id }) => id}
+            />
+          )
         }}
       </Query>
     )

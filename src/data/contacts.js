@@ -2,17 +2,17 @@
 import parseNumber from '../utils/parseNumber'
 import _ from 'lodash/fp'
 
-export type emailAddress = {
+export type emailAddressT = {
   label: string,
   email: string
 }
 
-export type phoneNumber = {
+export type phoneNumberT = {
   label: string,
   number: string
 }
 
-export type postalAddress = {
+export type postalAddressT = {
   street: string,
   city: string,
   state: string,
@@ -25,15 +25,15 @@ export type postalAddress = {
 export type contact = {
   recordID: string,
   company: string,
-  emailAddresses: Array<emailAddress>,
+  emailAddresses: Array<emailAddressT>,
   familyName: string,
   givenName: string,
   jobTitle: string,
   middleName: string,
-  phoneNumbers: Array<phoneNumber>,
+  phoneNumbers: Array<phoneNumberT>,
   hasThumbnail: boolean,
   thumbnailPath: string,
-  postalAddresses: Array<postalAddress>,
+  postalAddresses: Array<postalAddressT>,
   birthday: {
     year: number,
     month: number,
@@ -42,7 +42,11 @@ export type contact = {
 }
 
 export function getPhoneNumber(contact: contact): string {
-  return parseNumber(_.get('number', _.first(contact.phoneNumbers)))
+  return parseNumber(phoneNumber(contact))
+}
+
+export function phoneNumber(contact: contact): string {
+  return _.get('number', _.first(contact.phoneNumbers))
 }
 
 export function fullName(contact: contact): string {

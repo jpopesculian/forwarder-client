@@ -1,19 +1,16 @@
 //@flow
 
 import type { contact } from '../data/contacts'
-import type { SectionBase } from 'react-native/Libraries/Lists/SectionList'
+import type { SectionItemProps } from '../utils/sectionify'
 
 import React, { PureComponent } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import Avatar from './Avatar'
 import ContactActions from './ContactActions'
+import { phoneNumber, fullName } from '../data/contacts'
 import _ from 'lodash/fp'
 
-type Props = {
-  item: contact,
-  index: number,
-  section: SectionBase<contact>
-}
+type Props = SectionItemProps<contact>
 export default class ContactsListItem extends PureComponent<Props> {
   render() {
     const { item, index } = this.props
@@ -23,12 +20,8 @@ export default class ContactsListItem extends PureComponent<Props> {
           <Avatar contact={item} />
         </View>
         <View style={styles.description}>
-          <Text
-            style={styles.name}
-          >{`${item.givenName} ${item.familyName}`}</Text>
-          <Text
-            style={styles.number}
-          >{`${_.get('number', _.first(item.phoneNumbers))}`}</Text>
+          <Text style={styles.name}>{fullName(item)}</Text>
+          <Text style={styles.number}>{phoneNumber(item)}</Text>
         </View>
         <View style={styles.actions}>
           <ContactActions contact={item} />
