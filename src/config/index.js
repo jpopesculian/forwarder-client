@@ -1,1 +1,1 @@
-export const ROOT_URL = 'http://jpopesculian.ngrok.io'
+export const HOST = 'jpopesculian.ngrok.io'

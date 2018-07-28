@@ -2,4 +2,6 @@
 
 import PhoneNumber from 'awesome-phonenumber'
 
-export default (number: string) => PhoneNumber(number, 'US').getNumber()
+export type e164number = string
+
+export default (number: e164number) => PhoneNumber(number, 'US').getNumber()

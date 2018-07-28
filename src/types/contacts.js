@@ -1,6 +1,6 @@
 // @flow
 
-let namespace = 'contacts'
+const namespace = 'contacts'
 
 export const ADD_CONTACTS = `${namespace}/ADD_CONTACTS`
 export const LOAD_CONTACTS = `${namespace}/LOAD_CONTACTS`

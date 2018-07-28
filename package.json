@@ -12,6 +12,7 @@
     "apollo-link": "^1.2.2",
     "apollo-link-error": "^1.1.0",
     "apollo-link-http": "^1.5.4",
+    "apollo-link-ws": "^1.0.8",
     "awesome-phonenumber": "^2.2.6",
     "color": "^3.0.0",
     "graphql": "^0.13.2",
@@ -31,7 +32,8 @@
     "react-router-native": "^4.3.0",
     "redux": "^4.0.0",
     "redux-thunk": "^2.3.0",
-    "reselect": "^3.0.1"
+    "reselect": "^3.0.1",
+    "subscriptions-transport-ws": "^0.9.14"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.5",

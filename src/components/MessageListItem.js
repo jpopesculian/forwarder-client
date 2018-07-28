@@ -21,7 +21,7 @@ export default class MessageListItem extends PureComponent<Props> {
         <View style={[baseStyles.messageContainer, styles.messageContainer]}>
           <Text style={[baseStyles.message, styles.message]}>{item.body}</Text>
           <Text style={[baseStyles.timestamp, styles.timestamp]}>
-            {humanizeTimeSince(item.receivedTime || item.sentTime)}
+            {humanizeTimeSince(item.time)}
           </Text>
         </View>
       </View>
