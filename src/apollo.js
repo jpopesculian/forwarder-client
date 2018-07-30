@@ -43,4 +43,7 @@ const client = new ApolloClient({
   cache: new InMemoryCache()
 })
 
+// TODO remove
+window.client = client
+
 export default client

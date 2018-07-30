@@ -13,7 +13,7 @@ import _ from 'lodash/fp'
 import React, { PureComponent } from 'react'
 import { Query } from 'react-apollo'
 import query from '../graphql/queries/messages'
-import { loadMessages, errMessages, updateMessages } from '../actions/messages'
+import { fetchMessages } from '../actions/messages'
 
 import { connect } from 'react-redux'
 
@@ -22,9 +22,7 @@ type OwnProps = {
 }
 type StateProps = {}
 type DispatchProps = {
-  loadMessages: boolean => void,
-  errMessages: (string | void) => void,
-  updateMessages: keyedMessages => void
+  fetchMessages: () => void
 }
 export type Props = ContainerProps<OwnProps, StateProps, DispatchProps>
 
@@ -37,32 +35,15 @@ const mapDispatchToProps: connectDispatch<OwnProps, DispatchProps> = (
   dispatch,
   { number }: OwnProps
 ) => ({
-  loadMessages: loading => dispatch(loadMessages(number, loading)),
-  errMessages: error => dispatch(errMessages(number, error)),
-  updateMessages: messages => dispatch(updateMessages(number, messages))
+  fetchMessages: () => dispatch(fetchMessages(number))
 })
 
 class MessagesProviderView extends PureComponent<Props> {
   render() {
-    return (
-      <Query query={query}>
-        {({ loading, error, data }: messagesQueryResult) => {
-          this.props.loadMessages(loading)
-          this.props.errMessages(error)
-          if (loading || error) {
-            return null
-          }
-          const messages = _.reduce(
-            (result: { [string]: message }, item: message) =>
-              _.set(_.get('id', item), item, result),
-            {},
-            data.texts
-          )
-          this.props.updateMessages(messages)
-          return null
-        }}
-      </Query>
-    )
+    return null
+  }
+  componentDidMount() {
+    this.props.fetchMessages()
   }
 }
 

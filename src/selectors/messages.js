@@ -18,7 +18,8 @@ import {
   humanizeDate,
   removeTime,
   dateKey,
-  reverseDateKey
+  reverseDateKey,
+  unixstamp
 } from '../utils/parseDate'
 import _ from 'lodash/fp'
 
@@ -50,7 +51,18 @@ export const currentMessagesLoading: Selector<
   boolean
 > = createSelector(
   currentMessages,
-  (messages: conversationState): boolean => messages.loading
+  ({ loading }: conversationState): boolean =>
+    (typeof loading == 'undefined' ? true : loading)
+)
+
+export const currentMessagesDraft: Selector<
+  state,
+  null,
+  string
+> = createSelector(
+  currentMessages,
+  ({ draft }: conversationState): string =>
+    (typeof draft == 'undefined' ? '' : draft)
 )
 
 export const currentMessagesError: Selector<
@@ -59,7 +71,7 @@ export const currentMessagesError: Selector<
   error
 > = createSelector(
   currentMessages,
-  (messages: conversationState): error => messages.error
+  ({ error }: conversationState): error => error
 )
 
 export const hasError: Selector<state, null, boolean> = createSelector(
@@ -105,7 +117,16 @@ export const sortedMessagesList: Selector<
 > = createSelector(
   groupedMessagesList,
   (messages: groupedMessages): sortedMessages =>
-    sortGroupedData(_.orderBy('time', ['desc']), 'desc', messages)
+    sortGroupedData(
+      _.compose(
+        _.orderBy('time', ['desc']),
+        _.map((message: message) =>
+          _.set('unixstamp', unixstamp(message.time), message)
+        )
+      ),
+      'desc',
+      messages
+    )
 )
 
 export const messagesSections: Selector<

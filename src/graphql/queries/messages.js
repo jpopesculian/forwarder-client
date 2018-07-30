@@ -4,7 +4,8 @@ import type { queryResult } from '../../utils/gqlTypes'
 import type { message } from '../../data/messages'
 import gql from 'graphql-tag'
 
-export type messagesQueryResult = queryResult<{ texts: Array<message> }>
+export type messagesQueryData = { texts: Array<message> }
+export type messagesQueryResult = queryResult<messagesQueryData>
 
 export default gql`
   {

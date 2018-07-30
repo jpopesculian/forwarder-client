@@ -1,6 +1,7 @@
 //@flow
 
 import type { e164number } from '../utils/parseNumber'
+import type { messagesQueryData } from '../graphql/queries/messages'
 
 import _ from 'lodash/fp'
 
@@ -24,6 +25,7 @@ export type keyedMessages = {
 export type conversationState = {
   loading: boolean,
   error: string,
+  draft: string,
   messages: keyedMessages
 }
 
@@ -39,3 +41,21 @@ export const isInbound = (message: message): boolean =>
 
 export const isOutbound = (message: message): boolean =>
   message.direction === OUTBOUND_DIRECTION
+
+export const mapQueryToKeyedMessages = ({
+  texts
+}: messagesQueryData): keyedMessages =>
+  _.reduce(
+    (result: { [string]: message }, item: message) =>
+      _.set(_.get('id', item), item, result),
+    {},
+    texts
+  )
+
+export const newOutboundMessage = (to: string, body: string): message => ({
+  to,
+  body,
+  status: 'created',
+  direction: OUTBOUND_DIRECTION,
+  time: new Date().toISOString()
+})

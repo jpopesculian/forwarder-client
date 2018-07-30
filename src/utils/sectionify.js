@@ -51,7 +51,7 @@ export const sortGroupedData = curry3(<K, T>(
         return { key, data }
       },
       _.keys(groupedData),
-      mapValues(_.values(groupedData))
+      _.map(mapValues, _.values(groupedData))
     )
   )
 })

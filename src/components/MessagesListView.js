@@ -16,6 +16,7 @@ export default class MessagesListView extends PureComponent<Props> {
   render() {
     if (this.props.hasError) return <Text>Error :(</Text>
     if (!this.props.isReady) return <Text>Loading...</Text>
+    console.log(this.props.sections)
     return (
       <SectionList
         initialNumToRender={15}

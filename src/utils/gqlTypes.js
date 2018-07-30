@@ -5,3 +5,7 @@ export type queryResult<T> = {
   error: string | void,
   data: T
 }
+
+export type mutationResult<T> = {
+  data: T
+}
