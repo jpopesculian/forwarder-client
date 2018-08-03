@@ -25,6 +25,19 @@ const errorHandler = onError(({ graphQLErrors, networkError }) => {
   return null
 })
 
+const socketMiddleware = {
+  applyMiddleware: function(options, next) {
+    console.log(this, options)
+    const og = this.client.onmessage
+    this.client.onmessage = event => {
+      const object = { data: event.data }
+      console.log(object)
+      return og.call(this, event)
+    }
+    next(null)
+  }
+}
+
 const link = split(
   ({ query }) => {
     const { kind, operation } = getMainDefinition(query)
@@ -32,8 +45,10 @@ const link = split(
   },
   new WebSocketLink(
     new SubscriptionClient(`ws://${HOST}`, {
-      reconnect: true
+      reconnect: true,
+      connectionCallback: () => console.log('Socket connected')
     })
+    // }).use([socketMiddleware])
   ),
   new HttpLink({ uri: `https://${HOST}/graphql` })
 )

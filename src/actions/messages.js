@@ -10,6 +10,7 @@ import type {
 import client from '../apollo'
 import query from '../graphql/queries/messages'
 import sendMessageMutation from '../graphql/mutations/sendMessage'
+import subscription from '../graphql/subscriptions/onMessageFetched'
 import { mapQueryToKeyedMessages, newOutboundMessage } from '../data/messages'
 import {
   ERR_MESSAGES,
@@ -103,6 +104,7 @@ export const fetchMessages = (number: e164number): asyncAction => {
     try {
       const result = await client.query({ query })
       dispatch(updateMessages(number, mapQueryToKeyedMessages(result.data)))
+      dispatch(subscribeToMessageFetched(number))
     } catch (error) {
       dispatch(errMessages(number, error))
     }
@@ -123,5 +125,26 @@ export const sendMessage = (number: e164number, body: string): asyncAction => {
       // TODO sendMessageError
       console.warn(error)
     }
+  }
+}
+
+export const subscribeToMessageFetched = (number: e164number): asyncAction => {
+  return async dispatch => {
+    const observable = client.subscribe({
+      query: subscription,
+      variables: { number }
+    })
+    observable.subscribe({
+      next(x) {
+        console.log(x)
+      },
+      error(err) {
+        console.warn(`error: ${err}`)
+      },
+      complete() {
+        console.log('finished')
+      }
+    })
+    console.log(observable)
   }
 }
