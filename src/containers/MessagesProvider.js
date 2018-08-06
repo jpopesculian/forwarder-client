@@ -5,7 +5,7 @@ import type {
   connectDispatch,
   ContainerProps
 } from '../utils/reduxTypes'
-import type { messagesQueryResult } from '../graphql/queries/messages'
+import type { messagesResult } from '../graphql/queries/messages'
 import type { contactSections } from '../selectors/contacts'
 import type { message, keyedMessages } from '../data/messages'
 

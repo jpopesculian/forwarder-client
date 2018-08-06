@@ -3,9 +3,10 @@
 import type { action, asyncAction } from '../utils/reduxTypes'
 import type { message, keyedMessages } from '../data/messages'
 import type { e164number } from '../utils/parseNumber'
+import type { sendMessageResult } from '../graphql/mutations/sendMessage'
 import type {
-  sendMessageMutationResult
-} from '../graphql/mutations/sendMessage'
+  onMessageFetchedResult
+} from '../graphql/subscriptions/onMessageFetched'
 
 import client from '../apollo'
 import query from '../graphql/queries/messages'
@@ -102,7 +103,7 @@ export const fetchMessages = (number: e164number): asyncAction => {
   return async dispatch => {
     dispatch(loadMessages(number))
     try {
-      const result = await client.query({ query })
+      const result = await client.query({ query, variables: { number } })
       dispatch(updateMessages(number, mapQueryToKeyedMessages(result.data)))
       dispatch(subscribeToMessageFetched(number))
     } catch (error) {
@@ -116,7 +117,7 @@ export const sendMessage = (number: e164number, body: string): asyncAction => {
     const message = newOutboundMessage(number, body)
     dispatch(initSendMessage(number, message))
     try {
-      const result: sendMessageMutationResult = await client.mutate({
+      const result: sendMessageResult = await client.mutate({
         mutation: sendMessageMutation,
         variables: { number, body }
       })
@@ -135,8 +136,8 @@ export const subscribeToMessageFetched = (number: e164number): asyncAction => {
       variables: { number }
     })
     observable.subscribe({
-      next(x) {
-        console.log(x)
+      next({ data }: onMessageFetchedResult) {
+        dispatch(newMessage(number, data.messageFetched))
       },
       error(err) {
         console.warn(`error: ${err}`)
@@ -145,6 +146,5 @@ export const subscribeToMessageFetched = (number: e164number): asyncAction => {
         console.log('finished')
       }
     })
-    console.log(observable)
   }
 }

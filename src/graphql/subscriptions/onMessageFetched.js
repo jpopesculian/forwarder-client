@@ -1,16 +1,22 @@
 //@flow
 
-import type { queryResult } from '../../utils/gqlTypes'
+import type { subscriptionResult } from '../../utils/gqlTypes'
 import type { message } from '../../data/messages'
 import gql from 'graphql-tag'
+
+export type onMessageFetchedData = { messageFetched: message }
+export type onMessageFetchedResult = subscriptionResult<onMessageFetchedData>
 
 export default gql`
   subscription onMessageFetched($number: String!) {
     messageFetched(number: $number) {
+      id,
       body,
-      direction,
+      from,
       to,
-      from
+      direction,
+      time,
+      status
     }
   }
 `

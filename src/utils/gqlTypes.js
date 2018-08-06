@@ -9,3 +9,7 @@ export type queryResult<T> = {
 export type mutationResult<T> = {
   data: T
 }
+
+export type subscriptionResult<T> = {
+  data: T
+}

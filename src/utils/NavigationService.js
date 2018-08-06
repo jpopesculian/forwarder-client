@@ -25,6 +25,7 @@ export function navigate(
   params: {} = {},
   options: navigateOptions = {}
 ) {
+  console.log('navigating:', routeName, params)
   dispatch(
     NavigationActions.navigate({
       routeName,

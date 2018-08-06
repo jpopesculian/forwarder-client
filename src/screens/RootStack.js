@@ -21,7 +21,7 @@ export default createStackNavigator(
     Conversation: ConversationScreen
   },
   {
-    initialRouteName: 'Conversation',
+    initialRouteName: 'Tabs',
     initialRouteParams: {
       number: '+19165854267'
     },

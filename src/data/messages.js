@@ -1,7 +1,7 @@
 //@flow
 
 import type { e164number } from '../utils/parseNumber'
-import type { messagesQueryData } from '../graphql/queries/messages'
+import type { messagesData } from '../graphql/queries/messages'
 
 import _ from 'lodash/fp'
 
@@ -44,7 +44,7 @@ export const isOutbound = (message: message): boolean =>
 
 export const mapQueryToKeyedMessages = ({
   texts
-}: messagesQueryData): keyedMessages =>
+}: messagesData): keyedMessages =>
   _.reduce(
     (result: { [string]: message }, item: message) =>
       _.set(_.get('id', item), item, result),

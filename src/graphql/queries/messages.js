@@ -4,12 +4,12 @@ import type { queryResult } from '../../utils/gqlTypes'
 import type { message } from '../../data/messages'
 import gql from 'graphql-tag'
 
-export type messagesQueryData = { texts: Array<message> }
-export type messagesQueryResult = queryResult<messagesQueryData>
+export type messagesData = { texts: Array<message> }
+export type messagesResult = queryResult<messagesData>
 
 export default gql`
-  {
-    texts {
+  query texts($number: String) {
+    texts(number: $number) {
       id,
       body,
       from,
