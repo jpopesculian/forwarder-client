@@ -1,7 +1,9 @@
 // @flow
 
-import { createStore } from 'redux'
+// import createStore from './middleware/createStore'
 import rootReducer from './reducers'
-import middleware from './middleware'
+import { createStore } from 'redux'
 
-export default createStore(rootReducer, middleware)
+export const store = createStore(rootReducer)
+
+// export const { reducer, store, persistor } = createStore(rootReducer)
